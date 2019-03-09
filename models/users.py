@@ -23,6 +23,7 @@ class User(db.Model):
     created_at = db.Column(db.Date)
     updated_at = db.Column(db.Date)
     deleted_at = db.Column(db.Date)
+    social_id = db.Column(db.String())
 
     def __init__(self, body):
         self.user_type_id = body.get("user_type_id")
@@ -34,6 +35,7 @@ class User(db.Model):
         self.age = body.get("age")
         self.sex = body.get("sex")
         self.status = body.get("status")
+        self.social_id = body.get("social_id")
 
 
 # serialization process
@@ -51,3 +53,4 @@ class UserSchema(marshmallow.ModelSchema):
     updated_at = fields.Str()
     deleted_at = fields.Str()
     status = fields.Int()
+    social_id = fields.Str()

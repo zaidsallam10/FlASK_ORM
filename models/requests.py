@@ -6,7 +6,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from marshmallow import fields
 from models import request_statuses, users, products, product_types
-from schemas import UserSchema
+# from schemas import UserSchema
 
 
 class Request(db.Model):
@@ -38,7 +38,7 @@ class RequestSchema(marshmallow.ModelSchema):
     request_status_id = fields.Int()
     request_status = fields.Nested(request_statuses.RequestStatusSchema)
     customer_id = fields.Int()
-    customer = fields.Nested(UserSchema.UserSchema)
+    # customer = fields.Nested(UserSchema.UserSchema)
     product_id = fields.Int()
     product = fields.Nested(products.ProductSchema)
     created_at = fields.Str()

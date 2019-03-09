@@ -6,7 +6,7 @@ from models import product_types
 from sqlalchemy.orm import relationship
 from marshmallow import fields
 from models import request_statuses, users, products,product_types
-from schemas import UserSchema
+# from schemas import UserSchema
 
 class Product(db.Model):
     __tablename__ = 'products'
@@ -59,7 +59,7 @@ class ProductSchema(marshmallow.ModelSchema):
         name_arabic = fields.Str()
         product_type_id = fields.Int()
         product_type = fields.Nested(ProductTypeSchema)
-        vendor = fields.Nested(UserSchema.UserSchema)
+        # vendor = fields.Nested(UserSchema.UserSchema)
         vendor_id = fields.Int()
         price = fields.Int()
         description = fields.Str()

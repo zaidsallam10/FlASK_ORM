@@ -17,7 +17,7 @@ class UserController:
         print("serController")
 
     def getAllUsers(self):
-        data = self.users_table.query.filter(self.users_table.user_type_id == 1)
+        data = self.users_table.query.filter(self.users_table.user_type_id == 1).all()
         my_schema = self.users_schema(many=True)
         return my_schema.dump(data)
 
@@ -31,15 +31,20 @@ class UserController:
         my_schema = self.users_schema(many=False)
         return my_schema.dump(query)
 
-    def loginUser(self, email_address, password):
+    def login(self, email_address, password):
         query = self.users_table.query.filter(
-
             and_(
-
-                self.users_table.email_address == email_address, self.users_table.password == password,
-                self.users_table.user_type_id == 1)).first()
+                self.users_table.email_address == email_address, self.users_table.password == password)).first()
         my_schema = self.users_schema(many=False)
         return my_schema.dump(query)
+
+    def loginFacebook(self, social_id):
+        query = self.users_table.query.filter(
+            and_(
+                self.users_table.social_id == social_id)).first()
+        my_schema = self.users_schema(many=False)
+        return my_schema.dump(query)    
+
 
     def loginVendor(self, email_address, password):
         query = self.users_table.query.filter(

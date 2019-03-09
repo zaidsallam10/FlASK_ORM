@@ -14,14 +14,16 @@ class ProductController:
     products_model = products.Product
     products_types_model = products.ProductType
 
+
     def __init__(self):
         print("ProductController")
 
     def getAll(self):
-        two = self.products_model.query.filter(self.products_model.deleted_at == None).all()
+        two = self.products_model.query.all()
         product_schema = products.ProductSchema(many=True)
         output = product_schema.dump(two)
         return output
+
 
     def getById(self, id):
         two = self.products_model.query.filter(self.products_model.id == id).first()
