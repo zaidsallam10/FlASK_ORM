@@ -6,7 +6,7 @@ import json
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:300/shopping_system_v1'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LEOmessi123#@18.219.85.157:3306/shopping_system_v1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LEOmessi123#@18.219.85.157:3306/shopping_system_v2'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['CORS_HEADERS'] = 'Content-Type'
 # mysql = MySQL(app)

@@ -39,7 +39,6 @@ class Product(db.Model):
         self.product_type_id = body.get("product_type_id")
         self.vendor_id = body.get("vendor_id")
         self.price = body.get("price")
-        
         self.brand_name = body.get("brand_name")
         self.model_name = body.get("model_name")
         self.year_of_make = body.get("year_of_make")
@@ -48,7 +47,6 @@ class Product(db.Model):
         self.mileage = body.get("mileage")
         self.external_color = body.get("external_color")
         self.internal_color = body.get("internal_color")
-        self.mileage = body.get("description")
         
 
 
@@ -91,10 +89,13 @@ class ProductSchema(marshmallow.ModelSchema):
         mileage =fields.Str()
         external_color = fields.Str()
         internal_color = fields.Str()
-        mileage = fields.Str()
 
 
 
 
 
 
+
+
+
+        
