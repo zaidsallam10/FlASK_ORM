@@ -42,6 +42,7 @@ class UserController:
         return my_schema.dump(query)
 
     def loginFacebook(self, social_id):
+        db.session.commit()
         query = self.users_table.query.filter(
             and_(
                 self.users_table.social_id == social_id)).first()
