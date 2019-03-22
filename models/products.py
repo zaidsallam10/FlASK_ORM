@@ -16,15 +16,22 @@ class Product(db.Model):
     name_arabic = db.Column(db.String())
     product_type_id = db.Column(db.Integer, db.ForeignKey('product_types.id'), nullable=False)
     product_type = db.relationship('ProductType')
-
     vendor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     vendor = db.relationship('User')
-
-    price = db.Column(db.Float())
-    description = db.Column(db.Text())
     created_at = db.Column(db.Date)
     updated_at = db.Column(db.Date)
     deleted_at = db.Column(db.Date)
+
+    brand_name = db.Column(db.String())
+    model_name = db.Column(db.String())
+    year_of_make = db.Column(db.String())
+    type_of_engine = db.Column(db.String())
+    type_of_transmission = db.Column(db.String())
+    mileage = db.Column(db.String())
+    external_color = db.Column(db.String())
+    internal_color = db.Column(db.String())
+    price = db.Column(db.Float())
+    description = db.Column(db.Text())
 
     def __init__(self, body):
         self.name_english = body.get("name_english")
@@ -32,7 +39,17 @@ class Product(db.Model):
         self.product_type_id = body.get("product_type_id")
         self.vendor_id = body.get("vendor_id")
         self.price = body.get("price")
-        self.description = body.get("description")
+        
+        self.brand_name = body.get("brand_name")
+        self.model_name = body.get("model_name")
+        self.year_of_make = body.get("year_of_make")
+        self.type_of_engine = body.get("type_of_engine")
+        self.type_of_transmission = body.get("type_of_transmission")
+        self.mileage = body.get("mileage")
+        self.external_color = body.get("external_color")
+        self.internal_color = body.get("internal_color")
+        self.mileage = body.get("description")
+        
 
 
 
@@ -66,6 +83,15 @@ class ProductSchema(marshmallow.ModelSchema):
         created_at = fields.Str()
         updated_at = fields.Str()
         deleted_at = fields.Str()
+        brand_name = fields.Str()
+        model_name = fields.Str()
+        year_of_make = fields.Str()
+        type_of_engine = fields.Str()
+        type_of_transmission = fields.Str()
+        mileage =fields.Str()
+        external_color = fields.Str()
+        internal_color = fields.Str()
+        mileage = fields.Str()
 
 
 
