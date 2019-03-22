@@ -6,7 +6,7 @@ import json
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@127.0.0.1:300/shopping_system_v1'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LEOmessi123#@18.219.85.157:3306/shopping_system_v2'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:LEOmessi123#@18.219.85.157:3306/shopping_system_v3'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['CORS_HEADERS'] = 'Content-Type'
 # mysql = MySQL(app)
@@ -56,7 +56,7 @@ def loginFacebook():
     if not request.form and not request.get_json():
         abort(400)
     data = request.get_json() or request.form
-    return jsonify(UserController.UserController().loginFacebook(data['social_id'])[0])
+    return jsonify(UserController.UserController().loginFacebook(data['social_id']))
 
 # 
 
