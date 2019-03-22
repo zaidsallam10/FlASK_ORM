@@ -18,11 +18,13 @@ class RequestController:
         print("welcome to RequestController")
 
     def getCustomerRequests(self, id):
+        db.session.commit()
         query = self.requests_table.query.filter_by(customer_id=id, request_status_id=1).all()
         request_schema = requests.RequestSchema(many=True)
         return request_schema.dump(query)
 
     def getCustomerClosedRequests(self, id):
+        db.session.commit()
         query = self.requests_table.query.filter(
             and_(self.requests_table.customer_id == id,
                  or_(self.requests_table.request_status_id == 3, self.requests_table.request_status_id == 4))).all()
@@ -30,11 +32,13 @@ class RequestController:
         return request_schema.dump(query)
 
     def getVendorRequests(self, id):
+        db.session.commit()
         query = self.requests_table.query.join(products.Product).filter_by(vendor_id=id).all()
         request_schema = requests.RequestSchema(many=True)
         return request_schema.dump(query)
 
     def getRequests(self):
+        db.session.commit()
         query = self.requests_table.query.all()
         request_schema = requests.RequestSchema(many=True)
         return request_schema.dump(query)

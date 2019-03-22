@@ -17,16 +17,19 @@ class UserController:
         print("serController")
 
     def getAllUsers(self):
+        db.session.commit()
         data = self.users_table.query.filter(self.users_table.user_type_id == 1).all()
         my_schema = self.users_schema(many=True)
         return my_schema.dump(data)
 
     def getAllVendors(self):
+        db.session.commit()
         query = self.users_table.query.filter(self.users_table.user_type_id == 2)
         schema = self.users_schema(many=True)
         return schema.dump(query)
 
     def getById(self, id):
+        db.session.commit()
         query = self.users_table.query.filter(self.users_table.id == id).first()
         my_schema = self.users_schema(many=False)
         return my_schema.dump(query)
@@ -90,6 +93,7 @@ class UserController:
 
     # this function to get my products as a vendor
     def getMyProducts(self, id):
+        db.session.commit()
         query = self.products_model.query.filter(self.products_model.vendor_id == id).all()
         product_schema = products.ProductSchema(many=True)
         return product_schema.dump(query)

@@ -19,6 +19,7 @@ class ProductController:
         print("ProductController")
 
     def getAll(self):
+        db.session.commit()
         two = self.products_model.query.all()
         product_schema = products.ProductSchema(many=True)
         output = product_schema.dump(two)
@@ -26,12 +27,14 @@ class ProductController:
 
 
     def getById(self, id):
+        db.session.commit()
         two = self.products_model.query.filter(self.products_model.id == id).first()
         product_schema = products.ProductSchema(many=False)
         output = product_schema.dump(two)
         return output
 
     def getAllTypes(self):
+        db.session.commit()
         table = self.products_types_model.query.all()
         product_schema = products.ProductTypeSchema(many=True)
         return product_schema.dump(table)

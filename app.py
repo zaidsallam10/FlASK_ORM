@@ -56,7 +56,7 @@ def loginFacebook():
     if not request.form and not request.get_json():
         abort(400)
     data = request.get_json() or request.form
-    return jsonify(UserController.UserController().loginFacebook(data['social_id']))
+    return jsonify(UserController.UserController().loginFacebook(data['social_id'])[0])
 
 # 
 
