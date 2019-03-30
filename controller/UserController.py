@@ -95,6 +95,6 @@ class UserController:
     # this function to get my products as a vendor
     def getMyProducts(self, id):
         db.session.commit()
-        query = self.products_model.query.filter(self.products_model.vendor_id == id).all()
+        query = self.products_model.query.filter(self.products_model.vendor_id == id ,self.products_model.deleted_at == None ).all()
         product_schema = products.ProductSchema(many=True)
         return product_schema.dump(query)

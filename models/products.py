@@ -68,6 +68,25 @@ class ProductTypeSchema(marshmallow.ModelSchema):
         active = fields.Str()
         image = fields.Str()
 
+class UserSchema(marshmallow.ModelSchema):
+    id = fields.Int(dump_only=True)
+    user_type_id = fields.Int()
+    first_name = fields.Str()
+    last_name = fields.Str()
+    email_address = fields.Str()
+    password = fields.Str()
+    address = fields.Str()
+    age = fields.Str()
+    sex = fields.Str()
+    created_at = fields.Str()
+    updated_at = fields.Str()
+    deleted_at = fields.Str()
+    status = fields.Int()
+    social_id = fields.Str()
+    mobile_number = fields.Str()
+    profile_picture = fields.Str()
+
+
 class ProductSchema(marshmallow.ModelSchema):
         id = fields.Int(dump_only=True)
         name_english =fields.Str()
@@ -76,6 +95,8 @@ class ProductSchema(marshmallow.ModelSchema):
         product_type = fields.Nested(ProductTypeSchema)
         # vendor = fields.Nested(UserSchema.UserSchema)
         vendor_id = fields.Int()
+        vendor = fields.Nested(UserSchema)
+        
         price = fields.Int()
         description = fields.Str()
         created_at = fields.Str()

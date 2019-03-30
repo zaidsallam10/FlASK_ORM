@@ -15,6 +15,7 @@ class User(db.Model):
     first_name = db.Column(db.String())
     last_name = db.Column(db.String())
     email_address = db.Column(db.String())
+    mobile_number = db.Column(db.String())
     password = db.Column(db.String())
     address = db.Column(db.String())
     age = db.Column(db.Integer)
@@ -24,6 +25,8 @@ class User(db.Model):
     updated_at = db.Column(db.Date)
     deleted_at = db.Column(db.Date)
     social_id = db.Column(db.String())
+    profile_picture = db.Column(db.String())
+    
 
     def __init__(self, body):
         self.user_type_id = body.get("user_type_id")
@@ -36,7 +39,8 @@ class User(db.Model):
         self.sex = body.get("sex")
         self.status = body.get("status")
         self.social_id = body.get("social_id")
-
+        self.mobile_number=body.get("mobile_number")
+        self.profile_picture=body.get("profile_picture")
 
 # serialization process
 class UserSchema(marshmallow.ModelSchema):
@@ -54,3 +58,5 @@ class UserSchema(marshmallow.ModelSchema):
     deleted_at = fields.Str()
     status = fields.Int()
     social_id = fields.Str()
+    mobile_number = fields.Str()
+    profile_picture = fields.Str()

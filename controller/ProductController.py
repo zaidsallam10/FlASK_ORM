@@ -20,7 +20,7 @@ class ProductController:
 
     def getAll(self):
         db.session.commit()
-        two = self.products_model.query.all()
+        two = self.products_model.query.filter(self.products_model.deleted_at == None).all()
         product_schema = products.ProductSchema(many=True)
         output = product_schema.dump(two)
         return output
