@@ -4,7 +4,7 @@ from models import users
 from sqlalchemy import and_
 from app import db
 from sqlalchemy.orm import Session
-from models import products
+from models import products,user_favorites
 
 
 class UserController:
@@ -12,6 +12,8 @@ class UserController:
     users_schema = users.UserSchema
     products_model = products.Product
     products_types_model = products.ProductType
+    users_fav_table = user_favorites.UserFavorite
+    users_fav_schema = user_favorites.UserFavouriteSchema
 
     def __init__(self):
         print("serController")
@@ -98,3 +100,21 @@ class UserController:
         query = self.products_model.query.filter(self.products_model.vendor_id == id ,self.products_model.deleted_at == None ).all()
         product_schema = products.ProductSchema(many=True)
         return product_schema.dump(query)
+
+
+    def getAllUserFavouritesData(self):
+        db.session.commit()
+        data = self.users_fav_table.query.all()
+        my_schema = self.users_fav_schema(many=True)
+        return my_schema.dump(data)
+
+
+    def addUserFavouriteRecord(self, body):
+        session = Session(db)
+        data = self.users_fav_table(body)
+        db.session.add(data)
+        db.session.commit()
+        return body
+
+
+        

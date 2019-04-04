@@ -18,6 +18,7 @@ class Product(db.Model):
     product_type = db.relationship('ProductType')
     vendor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     vendor = db.relationship('User')
+    images = db.relationship('ProductImage', backref='product', lazy=True)
     created_at = db.Column(db.Date)
     updated_at = db.Column(db.Date)
     deleted_at = db.Column(db.Date)
@@ -32,6 +33,8 @@ class Product(db.Model):
     internal_color = db.Column(db.String())
     price = db.Column(db.Float())
     description = db.Column(db.Text())
+    image  = db.Column(db.Text())
+
 
     def __init__(self, body):
         self.name_english = body.get("name_english")
@@ -47,6 +50,7 @@ class Product(db.Model):
         self.mileage = body.get("mileage")
         self.external_color = body.get("external_color")
         self.internal_color = body.get("internal_color")
+        self.image = body.get("image")
         
 
 
@@ -87,16 +91,20 @@ class UserSchema(marshmallow.ModelSchema):
     profile_picture = fields.Str()
 
 
+class ProductImageSchema(marshmallow.ModelSchema):
+        id = fields.Int(dump_only=True)
+        product_id = fields.Int()
+        image = fields.Str()
+
 class ProductSchema(marshmallow.ModelSchema):
         id = fields.Int(dump_only=True)
         name_english =fields.Str()
         name_arabic = fields.Str()
         product_type_id = fields.Int()
         product_type = fields.Nested(ProductTypeSchema)
-        # vendor = fields.Nested(UserSchema.UserSchema)
         vendor_id = fields.Int()
         vendor = fields.Nested(UserSchema)
-        
+        images = fields.Nested(ProductImageSchema , many=True)
         price = fields.Int()
         description = fields.Str()
         created_at = fields.Str()
@@ -110,6 +118,7 @@ class ProductSchema(marshmallow.ModelSchema):
         mileage =fields.Str()
         external_color = fields.Str()
         internal_color = fields.Str()
+        image = fields.Str()
 
 
 

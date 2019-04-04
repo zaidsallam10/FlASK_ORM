@@ -187,6 +187,19 @@ def deleteProduct1(id):
     return jsonify(ProductController.ProductController().deleteProduct(id))
 
 
+@app.route('/user_favourites')
+def getAllUserFavouritesData():
+    return jsonify(UserController.UserController().getAllUserFavouritesData()[0])
+
+
+@app.route('/user_favourites', methods=['POST'])
+def addUserFavouriteRecord():
+    if not request.form and not request.get_json():
+        abort(400)
+    data = request.get_json() or request.form
+    return jsonify(UserController.UserController().addUserFavouriteRecord(data))
+
+
 # getVendorRequests
 if __name__ == "__main__":
     app.run(debug=True)

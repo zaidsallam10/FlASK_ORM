@@ -1,6 +1,6 @@
 from flask import jsonify
 import json
-from models import products
+from models import products,product_images
 # from models import product_types
 import jsonpickle
 from app import db
@@ -13,6 +13,8 @@ from sqlalchemy.orm import Session
 class ProductController:
     products_model = products.Product
     products_types_model = products.ProductType
+    product_images_model = product_images.ProductImage
+    product_images_schema = product_images.ProductImageSchema
 
 
     def __init__(self):
@@ -20,7 +22,7 @@ class ProductController:
 
     def getAll(self):
         db.session.commit()
-        two = self.products_model.query.filter(self.products_model.deleted_at == None).all()
+        two = self.products_model.query.join(product_images.ProductImage).filter(self.products_model.deleted_at == None).all()
         product_schema = products.ProductSchema(many=True)
         output = product_schema.dump(two)
         return output
@@ -46,11 +48,24 @@ class ProductController:
         product_schema = products.ProductTypeSchema(many=False)
         return product_schema.dump(query)
 
+
     def addProduct(self, body):
+        print(body)
         product = products.Product(body)
         db.session.add(product)
         db.session.commit()
-        return body
+        db.session.refresh(product)
+        images = (body.get("images"))
+        for element in images:
+            message = {
+             "product_id": product.id,
+             "image": element
+                    }
+            product_images1 = product_images.ProductImage(message)
+            db.session.add(product_images1)
+            db.session.commit()
+        product_schema = products.ProductSchema(many=False)
+        return product_schema.dump(product)
 
     def updateProduct(self, id, body):
         query = self.products_model.query.filter_by(id=id).first()
