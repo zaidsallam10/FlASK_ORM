@@ -199,6 +199,11 @@ def addUserFavouriteRecord():
     data = request.get_json() or request.form
     return jsonify(UserController.UserController().addUserFavouriteRecord(data))
 
+@app.route('/predictions')
+def predictions():
+    with open('predictions.json') as json_file:  
+        data = json.load(json_file)
+    return jsonify(data)
 
 # getVendorRequests
 if __name__ == "__main__":
