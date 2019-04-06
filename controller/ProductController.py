@@ -1,6 +1,6 @@
 from flask import jsonify
 import json
-from models import products,product_images
+from models import products,product_images,requests
 # from models import product_types
 import jsonpickle
 from app import db
@@ -8,6 +8,8 @@ from app import db
 from sqlalchemy.orm import lazyload, joinedload
 import datetime
 from sqlalchemy.orm import Session
+from sqlalchemy import func
+from sqlalchemy.orm import load_only
 
 
 class ProductController:
@@ -15,6 +17,8 @@ class ProductController:
     products_types_model = products.ProductType
     product_images_model = product_images.ProductImage
     product_images_schema = product_images.ProductImageSchema
+    requests_table = requests.Request
+    request_schema = requests.RequestSchema
 
 
     def __init__(self):
@@ -83,3 +87,11 @@ class ProductController:
         db.session.commit()
         request_schema = products.ProductSchema(many=False)
         return request_schema.dump(data)
+
+
+
+    def getAllMultiRequestsOnProduct(self):
+        db.session.commit()
+        result = db.engine.execute("select product_id from requests group by requests.product_id having count(requests.id)>1")
+        request_schema = requests.RequestSchema(many=True)
+        return  request_schema.dump(result)

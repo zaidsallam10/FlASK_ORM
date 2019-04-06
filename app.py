@@ -16,6 +16,7 @@ marshmallow = Marshmallow(app)
 from controller import UserController
 from controller import ProductController
 from controller import RequestController
+from controller import ChatController
 
 # CORS(app)
 # CORS(app, resources={r"/*": {"origins": "*"}})
@@ -205,6 +206,56 @@ def predictions():
         data = json.load(json_file)
     return jsonify(data)
 
+
+
+@app.route('/multi_bids')
+def multi_bids():
+    return jsonify(ProductController.ProductController().getAllMultiRequestsOnProduct()[0])
+
+
+@app.route('/channels')
+def channels():
+    return jsonify(ChatController.ChatController().getAllChannels()[0])
+
+
+@app.route('/channels', methods=['POST'])
+def createChannel():
+    if not request.form and not request.get_json():
+        abort(400)
+    data = request.get_json() or request.form
+    return jsonify(ChatController.ChatController().createChannel(data)[0])
+
+
+@app.route('/vendors/<id>/channels', methods=['GET'])
+def getVendorChannels(id):
+    return jsonify(ChatController.ChatController().getVendorChannels(id)[0])
+
+
+@app.route('/users/<id>/channels', methods=['GET'])
+def getCustomerChannels(id):
+    return jsonify(ChatController.ChatController().getCustomerChannels(id)[0])
+
+
+
+@app.route('/channels/<id>/chats', methods=['GET'])
+def getChatsByChannelId(id):
+    return jsonify(ChatController.ChatController().getChatsByChannelId(id)[0])
+
+
+@app.route('/chats', methods=['POST'])
+def createMsg():
+    if not request.form and not request.get_json():
+        abort(400)
+    data = request.get_json() or request.form
+    return jsonify(ChatController.ChatController().createMsg(data))
+
+
+# 
+
+# createMsg
+# 
+
+# ChatController
 # getVendorRequests
 if __name__ == "__main__":
     app.run(debug=True)

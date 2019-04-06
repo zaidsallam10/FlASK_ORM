@@ -57,6 +57,7 @@ class RequestSchema(marshmallow.ModelSchema):
     customer_id = fields.Int()
     customer = fields.Nested(UserSchema)
     product_id = fields.Int()
+    count_1 =fields.Int()
     product = fields.Nested(products.ProductSchema)
     created_at = fields.Str()
     updated_at = fields.Str()

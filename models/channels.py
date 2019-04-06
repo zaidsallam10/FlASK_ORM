@@ -8,25 +8,24 @@ from marshmallow import fields
 from models import request_statuses, users, products, product_types
 # from schemas import UserSchema
 
-class ProductImage(db.Model):
-    __tablename__ = 'product_images'
+class Channel(db.Model):
+    __tablename__ = 'channels'
 
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.Integer,db.ForeignKey('products.id'),nullable=False)
-#     
-    image = db.Column(db.String)
+    product_id = db.Column(db.Integer,nullable=False)
+    vendor_id = db.Column(db.Integer)
   
 
     def __init__(self, body):
         self.product_id = body.get("product_id")
-        self.image = body.get("image")
+        self.vendor_id = body.get("vendor_id")
         
 
 
-class ProductImageSchema(marshmallow.ModelSchema):
+class ChannelSchema(marshmallow.ModelSchema):
         id = fields.Int(dump_only=True)
         product_id = fields.Int()
-        image = fields.Str()
+        vendor_id = fields.Int()
 
 
 
