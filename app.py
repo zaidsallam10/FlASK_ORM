@@ -208,9 +208,9 @@ def predictions():
 
 
 
-@app.route('/multi_bids')
-def multi_bids():
-    return jsonify(ProductController.ProductController().getAllMultiRequestsOnProduct()[0])
+@app.route('/vendors/<id>/multi_bids')
+def multi_bids(id):
+    return jsonify(ProductController.ProductController().getAllMultiRequestsOnProduct(id)[0])
 
 
 @app.route('/channels')
@@ -248,6 +248,12 @@ def createMsg():
         abort(400)
     data = request.get_json() or request.form
     return jsonify(ChatController.ChatController().createMsg(data))
+
+
+
+@app.route('/products/<id>/updated_at', methods=['PUT'])
+def setUpdatedAtToProduct(id):
+    return jsonify(ProductController.ProductController().setUpdatedAtToProduct(id)[0])
 
 
 # 

@@ -90,8 +90,16 @@ class ProductController:
 
 
 
-    def getAllMultiRequestsOnProduct(self):
+
+    def getAllMultiRequestsOnProduct(self,id):
         db.session.commit()
-        result = db.engine.execute("select product_id from requests group by requests.product_id having count(requests.id)>1")
+        result = db.engine.execute("select product_id from requests join products on requests.product_id = products.id where products.updated_at is null and products.vendor_id="+id+" group by requests.product_id having count(requests.id)>1")
         request_schema = requests.RequestSchema(many=True)
         return  request_schema.dump(result)
+
+
+    def setUpdatedAtToProduct(self,id):
+        db.session.commit()
+        result = db.engine.execute("update products set updated_at = '2019-05-01' where id=" + id)
+        schema = products.ProductSchema(many=False)
+        return  schema.dump(result)
