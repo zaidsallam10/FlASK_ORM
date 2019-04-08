@@ -4,7 +4,7 @@ from models import users
 from sqlalchemy import and_
 from app import db
 from sqlalchemy.orm import Session
-from models import products,user_favorites
+from models import products,user_favorites,requests
 
 
 class UserController:
@@ -14,6 +14,8 @@ class UserController:
     products_types_model = products.ProductType
     users_fav_table = user_favorites.UserFavorite
     users_fav_schema = user_favorites.UserFavouriteSchema
+    requests_table = requests.Request
+    request_schema = requests.RequestSchema
 
     def __init__(self):
         print("serController")
@@ -115,6 +117,14 @@ class UserController:
         db.session.add(data)
         db.session.commit()
         return body
+
+
+    def getUsersWithReuests(self,id):
+        db.session.commit()
+        result = db.engine.execute("select * from requests join products on products.id = requests.product_id where product_id="+id+" and products.deleted_at is null")
+        request_schema = requests.RequestSchema(many=True)
+        return  request_schema.dump(result)
+    
 
 
         

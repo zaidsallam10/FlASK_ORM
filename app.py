@@ -256,7 +256,13 @@ def setUpdatedAtToProduct(id):
     return jsonify(ProductController.ProductController().setUpdatedAtToProduct(id)[0])
 
 
-# 
+
+@app.route('/products/<id>/users', methods=['GET'])
+def getUsersWithReuests(id):
+    return jsonify(UserController.UserController().getUsersWithReuests(id)[0])
+
+
+# getUsersWithReuests
 
 # createMsg
 # 
