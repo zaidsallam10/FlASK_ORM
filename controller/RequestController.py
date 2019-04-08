@@ -37,7 +37,7 @@ class RequestController:
 
     def getVendorRequests(self, id):
         db.session.commit()
-        query = self.requests_table.query.join(users.User).join(products.Product).filter_by(vendor_id=id).filter(products.Product.deleted_at == None).all()
+        query = self.requests_table.query.join(products.Product).filter_by(vendor_id=id).filter(products.Product.deleted_at == None).all()
         request_schema = requests.RequestSchema(many=True)
         return request_schema.dump(query)
 
