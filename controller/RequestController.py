@@ -23,7 +23,7 @@ class RequestController:
 
     def getCustomerRequests(self, id):
         db.session.commit()
-        query = self.requests_table.query.filter_by(customer_id=id).join(products.Product).filter(products.Product.deleted_at == None).all()
+        query = self.requests_table.query.filter_by(customer_id=id).join(products.Product).filter(products.Product.deleted_at == None , or_(self.requests_table.request_status_id == 1, self.requests_table.request_status_id == 3)).all()
         request_schema = requests.RequestSchema(many=True)
         return request_schema.dump(query)
 
@@ -37,7 +37,7 @@ class RequestController:
 
     def getVendorRequests(self, id):
         db.session.commit()
-        query = self.requests_table.query.join(products.Product).filter_by(vendor_id=id).filter(products.Product.deleted_at == None).all()
+        query = self.requests_table.query.join(products.Product).filter_by(vendor_id=id).filter(products.Product.deleted_at == None ,self.requests_table.request_status_id == 1 ).all()
         request_schema = requests.RequestSchema(many=True)
         return request_schema.dump(query)
 
